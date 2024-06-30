@@ -1,5 +1,5 @@
 from huggingface_hub import login
-from flask import Flask, request, Response, jsonify
+from flask import Flask, request, jsonify
 from werkzeug.utils import secure_filename
 import os
 import uuid
@@ -9,22 +9,21 @@ from transformers import (
     AutoTokenizer,
     AutoModelForCausalLM,
     BitsAndBytesConfig,
-    TextStreamer,
-    pipeline
+    TextStreamer
 )
 from langchain.text_splitter import CharacterTextSplitter
-from langchain.document_loaders import PyPDFLoader
+from langchain.document_loaders import PyPDFLoader, CSVLoader
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 from langchain.vectorstores import Qdrant
 from langchain.llms import HuggingFacePipeline
-from langchain.chains import LLMChain, RetrievalQA
+from langchain.chains import RetrievalQA
 
 login(token='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')
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads/'
 app.config['DATABASE_FOLDER'] = 'database/'
-ALLOWED_EXTENSIONS = {'pdf'}
+ALLOWED_EXTENSIONS = {'pdf', 'csv'}
 
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
@@ -32,17 +31,13 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
 if not os.path.exists(app.config['DATABASE_FOLDER']):
     os.makedirs(app.config['DATABASE_FOLDER'])
 
-# Load the Llama-2 Model
-# model_name = 'taide/Llama3-TAIDE-LX-8B-Chat-Alpha1'
 model_name = 'meta-llama/Meta-Llama-3-8B'
-
 model_config = transformers.AutoConfig.from_pretrained(model_name)
 tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
 tokenizer.pad_token = tokenizer.eos_token
 tokenizer.padding_side = "right"
 streamer = TextStreamer(tokenizer, skip_prompt=True)
 
-# bitsandbytes parameters
 use_4bit = True
 bnb_4bit_compute_dtype = "float16"
 bnb_4bit_quant_type = "nf4"
@@ -56,7 +51,6 @@ bnb_config = BitsAndBytesConfig(
     bnb_4bit_use_double_quant=use_nested_quant,
 )
 
-# Check GPU compatibility with bfloat16
 if compute_dtype == torch.float16 and use_4bit:
     major, _ = torch.cuda.get_device_capability()
     if major >= 8:
@@ -64,16 +58,15 @@ if compute_dtype == torch.float16 and use_4bit:
         print("Your GPU supports bfloat16: accelerate training with bf16=True")
         print("=" * 80)
 
-# Load pre-trained config
 model = AutoModelForCausalLM.from_pretrained(model_name, quantization_config=bnb_config)
 
-# Building a LLM QNA chain
 text_generation_pipeline = transformers.pipeline(
     model=model,
     tokenizer=tokenizer,
     task="text-generation",
     temperature=0.2,
     repetition_penalty=1.5,
+    return_full_text=False,
     max_new_tokens=100,
     streamer=streamer,
 )
@@ -81,9 +74,41 @@ text_generation_pipeline = transformers.pipeline(
 llama_llm = HuggingFacePipeline(pipeline=text_generation_pipeline)
 file_id = None
 retrieval_chain = None
+db = None
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def process_file(filepath):
+    global retrieval_chain, db
+
+    if filepath.endswith('.pdf'):
+        loader = PyPDFLoader(filepath)
+    elif filepath.endswith('.csv'):
+        loader = CSVLoader(filepath, encoding='utf-8')  # 指定字符編碼
+    else:
+        return
+
+    docs = loader.load_and_split()
+    text_splitter = CharacterTextSplitter(chunk_size=500, chunk_overlap=100)
+    chunked_documents = text_splitter.split_documents(docs)
+
+    if db is None:
+        db = Qdrant.from_documents(chunked_documents, HuggingFaceEmbeddings(model_name='sentence-transformers/all-mpnet-base-v2'), location=":memory:")
+    else:
+        db.add_documents(chunked_documents)
+
+    retriever = db.as_retriever()
+    retrieval_chain = RetrievalQA.from_llm(llm=llama_llm, retriever=retriever)
+
+def load_all_files_from_database():
+    database_folder = app.config['DATABASE_FOLDER']
+    for filename in os.listdir(database_folder):
+        if allowed_file(filename):
+            filepath = os.path.join(database_folder, filename)
+            process_file(filepath)
+            print(f"Processed file: {filename}")
+    return 'All files in the database folder have been loaded and processed.', 200
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -99,33 +124,8 @@ def upload_file():
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], file_id)
         file.save(filepath)
 
-        # Placeholder for your PDF processing logic
-        process_pdf(filepath)
-
+        process_file(filepath)
         return 'File uploaded & processed successfully. You can begin querying now', 200
-
-def process_pdf(filepath):
-    global retrieval_chain
-    # Loading and splitting the document
-    loader = PyPDFLoader(filepath)
-    docs = loader.load_and_split()
-    # Chunk text
-    text_splitter = CharacterTextSplitter(chunk_size=500, chunk_overlap=100)
-    chunked_documents = text_splitter.split_documents(docs)
-
-    # Load chunked documents into the Qdrant index
-    db = Qdrant.from_documents(chunked_documents, HuggingFaceEmbeddings(model_name='sentence-transformers/all-mpnet-base-v2'), location=":memory:")
-    retriever = db.as_retriever()
-    retrieval_chain = RetrievalQA.from_llm(llm=llama_llm, retriever=retriever)
-
-def load_all_pdfs_from_database():
-    database_folder = app.config['DATABASE_FOLDER']
-    for filename in os.listdir(database_folder):
-        if allowed_file(filename):
-            filepath = os.path.join(database_folder, filename)
-            process_pdf(filepath)
-            print(f"Processed file: {filename}")
-    return 'All PDFs in the database folder have been loaded and processed.', 200
 
 @app.route('/query', methods=['POST'])
 def query():
@@ -137,16 +137,13 @@ def query():
     query = data['query']
     response = retrieval_chain.run(query)
     
-
-    # Extract only the necessary part from the response
-    start_idx = response.find("Helpful Answer: ")
-    if start_idx != -1:
-        response = response[start_idx + len("Helpful Answer: "):]
-
+    if "Helpful Answer: " in response:
+        response = response.split("Helpful Answer: ")[-1].split("\n")[0]
+    elif "Explanation: " in response:
+        response = response.split("Explanation: ")[-1].split("\n")[0]
 
     return jsonify({"response": response}), 200
 
-
 if __name__ == '__main__':
-    load_all_pdfs_from_database()
+    load_all_files_from_database()
     app.run(debug=True)

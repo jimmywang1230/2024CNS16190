@@ -551,55 +551,38 @@ B.1 提供以結構化方式記錄此等衡量理由之綱要。此係容許其�
 
  
 參考資料
-[1 ]	ET SI	T R	1 0 3	3 0 5 - 3 :	" CYB ER;	Critical	Security  Co ntro ls	fo r	Effective	Cyb er
-Defence; P art 3 : Service Secto r Imp lementatio ns" .
-[2 ]	ET SI T R 1 0 3 3 0 9 : " CYB ER; Secure b y Default - p latfo rm security techno lo gy" .
-[3 ]	NIST Sp ecial P ub licatio n 8 0 0 - 6 3 B : " Digital Id entity Guid elines - Authenticatio n and LifecycleManagement" .
+[1]	ETSI TR	103305-3:" CYBER;Critical Security  Controls for Effective	Cyber Defence; Part 3 : Service Sector Implementations" .
+[2]	ETSI TR 103309 : " CYBER; Secure by Default - platform security technolo gy" .
+[3]	NIST Special Publication 800-63B : "Digital Id entity Guidelines - Authentication and Lifecycle Management" .
+備考：可查詢網址https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-63b.pdf。
+[4]	ISO/IEC 29147 : "Info rmatio n techno lo gy - Security techniq ues - Vulnerab ility Disclosure" .
+備 考：可查詢網址https://www.iso.org/standard/45170.html 。
+[5]	OASIS: "CSAF Common Vulnerability Reporting Framework (CVRF)" .
+備考：可查詢網址。
+備 考：可查詢網址 。 
+[10] IoT Security Foundation: " IoT Security Compliance Framework" , Release 2  December 2018.備考：可查詢網址。
+[11] GSMA: " GSMA IoT Security Guidelines and Assessment" .
+備考：可查詢網址。
+
+
+[17] F-Secure: " IoT threats: Explosion of 'smart' devices filling up ho mes leads to increasing risks" .。
+[22] Io T Security Foundation: " Vulnerability Disclosure - Best Practice Guidelines" .
+備考：可查詢網址。
+[23] OWASP Internet o f Things (IoT) Top 10 2018.
 備考：可查詢網址
-。
-[4 ]	ISO/IEC 2 9 1 4 7 : " Info rmatio n techno lo gy - Security techniq ues - Vulnerab ility Disclo sure" .
+
+[24] IEEE 802.15.4 - 2015 : "IEEE Stand ard for Low - Rate Wireless Netwo rks" .
+備考：可查詢網址。
+[25] ETSI TS 102221 : " Smart Card s; UICC - Terminal interface; Physical and logical characteristics" .
+[26] GSMA: " SGP. 2 2 Technical Sp ecificatio n v2.2. 1 " .
+[27] CNS 27005:2018 : " Information technology - Security techniques - Info rmation security risk management" .
 備 考：可查詢網址 。
-[5 ]	OASIS: " CSAF Co mmo n Vulnerab ility Rep o rting Framewo rk (CVRF)" .
+[28] Microsoft Corporatio n: " The STRIDE Threat Model" .
 備考：可查詢網址
 。
-備 考：可查詢網址 。 [1 0 ] I o T Security Fo und atio n: " Io T Security Co mp liance Framewo rk" , Release 2
-Decemb er 2 0 1 8.
-備考：可查詢網址
-。
-[11 ] GSMA: " GSMA Io T Security Guid elines and Assessment" .
-備考：可查詢網址
-。
-
-
- 
-備考：可查詢網址
-。
-[1 7 ] F - Secure: " Io T threats: Exp lo sio n o f 'smart' d evices filling up ho mes lead s to increasing risks" .
-。
-[2 2 ] Io T Security Fo und atio n: " Vulnerab ility Disclo sure  - B est P ractice Guid elines" .
-備考：可查詢網址
-。
-[2 3 ] OWASP Internet o f T hings (Io T ) To p 1 0 2 0 1 8.
-備考：可查詢網址
-
-
- 
-ab =Io T _ To p _ 1 0 。
-[2 4 ] IEEE 8 0 2.1 5.4 ™ - 2 0 1 5 : " IEEE Stand ard fo r Lo w - Rate Wireless Netwo rks" .
-備考：可查詢網址
-。
-[2 5 ] ET SI T S 1 0 2 2 2 1 : " Smart Card s; UICC - Terminal interface; P h ysical and lo gical characteristics" .
-[2 6 ] GSMA: " SGP. 2 2 Technical Sp ecificatio n v2.2. 1 " .
-[2 7 ] CNS 2 7 0 0 5 :2 0 1 8 : " Info rmatio n techno lo gy - Security techniq ues - Info rmatio n security risk management" .
-備 考：可查詢網址 。
-[2 8 ] Micro so ft ®	Co rp o ratio n: " T he ST RIDE T hreat Mo d el" .
-備考：可查詢網址
-。
-[2 9 ] ET SI	T R	1 2 1	9 0 5 :	" Digital	cellular	teleco mmunicatio ns	system	(P hase	2 +)
-(GSM);	Universal	Mo b ile	Teleco mmunicatio ns	System	(UMT S);	LT E;
-Vo cab ulary fo r 3 GP P Sp ecificatio ns (3 GP P T R 2 1.9 0 5 )" .
-[ 3 0 ] ET SI	EN	3 0 3	6 4 5 :2 0 2 0	" CYB ER ； Cyb er	Security	fo r	Co ncumer	Internet	o f
-T hings:B aseline Req uirements " .
+[29] ETSI TR121905 : " Digital cellular telecommunications system (Phase	2 +)(GSM);	Universal Mobile Telecommunications	System	(UMTS);	LTE;
+Vocabulary for 3 GPP Specifications (3 GPPTR 21.905 )" .
+[30] ETSI EN 303645:2020 " CYBER ； Cyber Security for Concumer	Internet of Things:Baseline Requirements " .
 備考：可查詢網址
 。
 
@@ -607,126 +590,84 @@ T hings:B aseline Req uirements " .
  
 名詞對照
 - A -
-ad ministrato r
-ap p licatio n p ro gramming interface, AP I
-asso ciated service
-authenticatio n mechanism
-authenticatio n value
-authenticity
+administrator: 管理者
+ap plication programming interface, API: 應用程式介面
+associated service: 相關聯服務
+authentication mechanism: 鑑別機制
+authentication value: 鑑別值
+authenticity: 真確性
 - B -
-b ase statio n
-b aseline p ro visio n
-b est p ractice cryp to grap hy
-b o o t lo ad er
+base station: 基地臺
+baseline provision: 基準控制措施
+best practice cryptography: 最佳實務密碼學
+boot loader: 啟動載入器
 - C -
-certificate
-co mmo n vulnerab ility rep o rting framewo rk, CVRF
-co mmunicatio n p ro to co l
-co mp etent ind ust ry b o d y
-co nfiguratio n
-co nstrained d evice
-co nsumer
-co nsumer Io T d evice
-co ntro ls
-co o rd inated vulnerab ility d isclo sure, CVD cred ential stuffing
-critical security p arameter
-cryp to grap hic o p eratio n
-cryp to grap hic p rimitive
-cyb er security
+certificate: 憑證
+common vulnerability reporting framework, CVRF: 通用脆弱性報告框架
+communication protocol: 通訊協定
+competent industry body: 權責產業機構
+configuration: 組態
+constrained device: 受限制裝置
+consumer:消費者
+consumer IoT device:消費者 IoT裝置
+controls:控制措施
+coordinated vulnerability disclosure, CVD credential stuffing:協調脆弱性揭露
+critical stuffing:信符填充
+critical security parameter:關鍵安全參數
+crypto graphic operation:密碼式運算
+crypto graphic primitive:密碼式基元
+cyber security:網宇安全
 - D -
-d aemo n
-d eb ug interface
-d enial o f service, Do S
-
-
-管理者
-應用程式介面
-相關聯服務
-鑑別機制
-鑑別值
-真確性
-基地臺
-基準控制措施
-最佳實務密碼學
-啟動載入器
-憑證
-通用脆弱性報告框架
-通訊協定
-權責產業機構
-組態
-受限制裝置
-消費者
-消費者 Io T 裝置
-控制措施
-協調脆弱性揭露
-信符填充
-關鍵安全參數
-密碼式運算
-密碼式基元
-網宇安全
-常駐程式
-除錯介面
-阻絕服務
- 
-d evice manufacturer	裝置製造者
-d istrib uted d enial o f service, DDo S	分散式阻絕服務
+daemon: 常駐程式
+debug interface: 除錯介面
+denial of service, DoS: 阻絕服務
+device manufacturer:裝置製造者
+distributed denial of service, DDoS:分散式阻絕服務
 - F -
-facto ry d efault	原廠預設
-facto ry state	原廠狀態
-functio nality	功能性
+factory default: 原廠預設
+factory state:	原廠狀態
+functionality:	功能性
 - G -
 gateway	閘道器
-General Data P ro tectio n Regulatio n, GDP R	一般資料保護規則
+General Data Protection Regulation, GDPR: 一般資料保護規則
 - H -
 hub	集線器
 - I -
-id entity	識別資訊；身分
-incremental b ack - o ff	遞增後退
-initializatio n	初始化
-initialized state	初始化狀態
-internet o f things, Io T	Io T
+identity:識別資訊；身分
+incremental back - off:遞增後退
+initializatio:初始化
+initialized state:初始化狀態
+internet of things, IoT:IoT
 - L -
-lo g entry	日誌資料項
+log entry:日誌資料項
 - M -
-mo d el d esignatio n	型號名稱
+model designation:型號名稱
 - O -
-o p en so urce	開放原始碼
-o wner	擁有者
+open source: 開放原始碼
+owner:	擁有者
 - P -
-p asswo rd	通行碼
-p atch	修補程式
-p erso nal d ata	個人資料
-p hysical interface	實體介面
-p ub lic security p arameter	公開安全參數
+password: 通行碼
+patch: 修補程式
+personal data:個人資料
+physical interface:實體介面
+public security parameter: 公開安全參數
 
 
  
 - R -
-req uirements
-要求事項
+requirements:要求事項
 - S -
-security b y d esign
-security mo d ule
-security up d ate
-sensi tive security p arameter
-senso r
-so ftware b ill o f materials, SB OM
-so urce co d e
-stakeho ld er
-於設計即保護安全
-安全模組
-安全更新
-敏感性安全參數
-感測器
-軟體組成清單
-原始碼
-利害相關者
+security by design:於設計即保護安全
+security module:安全模組
+security update:安全更新
+sensitive security parameter:敏感性安全參數
+sensor:感測器
+software bill of materials, SBOM:軟體組成清單
+source code:原始碼
+stakeholder:利害相關者
 - T -
-telemetry d ata
-trusted executio n enviro nment, T EE
-遙測資料
-受信任執行環境
+telemetry data: 遙測資料
+trusted execution environment, TEE: 受信任執行環境
 - V -
-vulnerab ility
-脆弱性
+vulnerability: 脆弱性
 
