@@ -1,5 +1,5 @@
 from huggingface_hub import login
-from flask import Flask, request, jsonify
+from flask import Flask, request, Response, jsonify
 from werkzeug.utils import secure_filename
 import os
 import uuid
@@ -9,14 +9,20 @@ from transformers import (
     AutoTokenizer,
     AutoModelForCausalLM,
     BitsAndBytesConfig,
-    TextStreamer
+    TextStreamer,
+    pipeline
 )
 from langchain.text_splitter import CharacterTextSplitter
-from langchain.document_loaders import PyPDFLoader, CSVLoader
-from langchain.embeddings.huggingface import HuggingFaceEmbeddings
-from langchain.vectorstores import Qdrant
-from langchain.llms import HuggingFacePipeline
-from langchain.chains import RetrievalQA
+# from langchain.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyPDFLoader, CSVLoader
+# from langchain.embeddings.huggingface import HuggingFaceEmbeddings
+# from langchain.embeddings import HuggingFaceEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
+# from langchain.vectorstores import Qdrant
+from langchain_community.vectorstores import Qdrant
+# from langchain.llms import HuggingFacePipeline
+from langchain_huggingface import HuggingFacePipeline
+from langchain.chains import LLMChain, RetrievalQA
 
 login(token='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')
 
@@ -82,11 +88,18 @@ def allowed_file(filename):
 def process_file(filepath):
     global retrieval_chain, db
 
-    if filepath.endswith('.pdf'):
+    # 使用os.path.splitext來獲取文件擴展名
+    _, file_extension = os.path.splitext(filepath)
+    file_extension = file_extension.lower()
+
+    print(f"Processing file: {filepath}")
+    
+    if file_extension == '.pdf':
         loader = PyPDFLoader(filepath)
-    elif filepath.endswith('.csv'):
-        loader = CSVLoader(filepath, encoding='utf-8')  # 指定字符編碼
+    elif file_extension == '.csv':
+        loader = CSVLoader(filepath, encoding='utf-8')
     else:
+        print(f"Unsupported file type: {filepath}")
         return
 
     docs = loader.load_and_split()
@@ -100,6 +113,7 @@ def process_file(filepath):
 
     retriever = db.as_retriever()
     retrieval_chain = RetrievalQA.from_llm(llm=llama_llm, retriever=retriever)
+    print("Database initialized and retrieval chain set")
 
 def load_all_files_from_database():
     database_folder = app.config['DATABASE_FOLDER']
@@ -109,6 +123,7 @@ def load_all_files_from_database():
             process_file(filepath)
             print(f"Processed file: {filename}")
     return 'All files in the database folder have been loaded and processed.', 200
+
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -121,11 +136,20 @@ def upload_file():
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file_id = str(uuid.uuid4())
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], file_id)
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], f"{file_id}{os.path.splitext(filename)[1]}")
         file.save(filepath)
 
+        print(f"File uploaded: {filename}")
+        print(f"Filepath: {filepath}")
+
         process_file(filepath)
-        return 'File uploaded & processed successfully. You can begin querying now', 200
+        if retrieval_chain is not None:
+            print("File uploaded & processed successfully.")
+            return 'File uploaded & processed successfully. You can begin querying now', 200
+        else:
+            print("Failed to initialize retrieval chain.")
+            return 'Failed to process file.', 500
+
 
 @app.route('/query', methods=['POST'])
 def query():

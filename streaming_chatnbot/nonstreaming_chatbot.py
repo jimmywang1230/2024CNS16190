@@ -13,10 +13,15 @@ from transformers import (
     pipeline
 )
 from langchain.text_splitter import CharacterTextSplitter
-from langchain.document_loaders import PyPDFLoader
-from langchain.embeddings.huggingface import HuggingFaceEmbeddings
-from langchain.vectorstores import Qdrant
-from langchain.llms import HuggingFacePipeline
+# from langchain.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyPDFLoader
+# from langchain.embeddings.huggingface import HuggingFaceEmbeddings
+# from langchain.embeddings import HuggingFaceEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
+# from langchain.vectorstores import Qdrant
+from langchain_community.vectorstores import Qdrant
+# from langchain.llms import HuggingFacePipeline
+from langchain_huggingface import HuggingFacePipeline
 from langchain.chains import LLMChain, RetrievalQA
 
 login(token='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')
@@ -114,7 +119,7 @@ def process_pdf(filepath):
     chunked_documents = text_splitter.split_documents(docs)
 
     # Load chunked documents into the Qdrant index
-    db = Qdrant.from_documents(chunked_documents, HuggingFaceEmbeddings(model_name='sentence-transformers/all-mpnet-base-v2'), location=":memory:")
+    db = Qdrant.from_documents(chunked_documents, HuggingFaceEmbeddings(model_name='sentence-transformers/multi-qa-mpnet-base-dot-v1'), location=":memory:")
     retriever = db.as_retriever()
     retrieval_chain = RetrievalQA.from_llm(llm=llama_llm, retriever=retriever)
 
