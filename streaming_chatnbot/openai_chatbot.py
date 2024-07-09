@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 import uuid
 import openai
+from langchain_openai import ChatOpenAI
 from langchain.text_splitter import CharacterTextSplitter
 from langchain_community.document_loaders import PyPDFLoader, CSVLoader
 from langchain_community.vectorstores import Qdrant
@@ -31,7 +32,7 @@ if not os.path.exists(app.config['DATABASE_FOLDER']):
     os.makedirs(app.config['DATABASE_FOLDER'])
 
 # 使用OpenAI GPT-4聊天模型
-llm = OpenAI(api_key=OPENAI_API_KEY, model="gpt-4o", request_timeout=60, chat_model=True)
+llm = ChatOpenAI(api_key=OPENAI_API_KEY, model="gpt-4o", request_timeout=60)
 retrieval_chain = None
 db = None
 
