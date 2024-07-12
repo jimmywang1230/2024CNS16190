@@ -9,12 +9,15 @@ from langchain_openai import ChatOpenAI
 from langchain.text_splitter import CharacterTextSplitter
 from langchain_community.document_loaders import PyPDFLoader, CSVLoader
 from langchain_community.vectorstores import Qdrant
-from langchain.embeddings import OpenAIEmbeddings
-from langchain.chains import RetrievalQA, LLMChain
-from langchain.schema import BaseRetriever
-from langchain.llms import OpenAI
+from langchain.chains import RetrievalQA, ConversationChain
+from langchain_community.llms import OpenAI
+from langchain_community.embeddings import OpenAIEmbeddings
+from langchain.prompts import PromptTemplate
+from langchain.memory import ConversationBufferMemory
+from langchain.globals import set_verbose
 
-login(token='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')
+set_verbose(True)
+
 load_dotenv()
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
@@ -32,9 +35,28 @@ if not os.path.exists(app.config['DATABASE_FOLDER']):
     os.makedirs(app.config['DATABASE_FOLDER'])
 
 # 使用OpenAI GPT-4聊天模型
-llm = ChatOpenAI(api_key=OPENAI_API_KEY, model="gpt-4o", request_timeout=60)
+llm = ChatOpenAI(api_key=OPENAI_API_KEY, model="gpt-4", request_timeout=60)
 retrieval_chain = None
 db = None
+
+prompt_template = PromptTemplate(input_variables=["history", "input"], template="""
+You are a helpful assistant that understands CNS16190, EN303645, and ETSI TS 103 701. Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
+When you are asked to generate a test scenario, you should use three things to generate a test scenario: 
+1. given provision number and description 
+2. provided feature that corresponds to provision description
+3. Find the test scenario in the ETSI TS 103 701 that corresponds to the provision number and description
+Context: {history}
+
+Question: {input}
+""")
+
+memory = ConversationBufferMemory(memory_key="history", return_messages=True)
+
+conversation_chain = ConversationChain(
+    llm=llm,
+    memory=memory,
+    prompt=prompt_template
+)
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -64,7 +86,7 @@ def process_file(filepath):
     else:
         db.add_documents(chunked_documents)
 
-    retriever: BaseRetriever = db.as_retriever()
+    retriever = db.as_retriever()
     retrieval_chain = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=retriever)
     print("Database initialized and retrieval chain set")
 
@@ -110,13 +132,10 @@ def query():
         return 'Query not provided', 400
     
     query = data['query']
-    response = retrieval_chain.run(query)
+    context = retrieval_chain.run(query)
     
-    if "Helpful Answer: " in response:
-        response = response.split("Helpful Answer: ")[-1].split("\n")[0]
-    elif "Explanation: " in response:
-        response = response.split("Explanation: ")[-1].split("\n")[0]
-
+    response = conversation_chain.predict(history=memory.load_memory_variables({})["history"], input=query, context=context)
+    
     return jsonify({"response": response}), 200
 
 if __name__ == '__main__':
