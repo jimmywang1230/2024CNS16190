@@ -1,0 +1,192 @@
+﻿provision,detail,status,support,qustion,answer,reason,result
+5.3-13,製造商應以對使用者易於理解、透明的方式公開定義的支援期限。,M,,"Test Scenario:
+Test group 5.2-1 content: 
+The test group addresses the provision 5.2-1. 
+The manufacturer's vulnerability disclosure policy should be publicly disclosed. This policy should include at least: contact information for reporting issues; and information on the schedule regarding: 1) receipt of initial confirmation; and 2) status updates until the reported issue is resolved. 
+The test scenario involves testing the manufacturer's vulnerability disclosure policy to ensure transparency and clarity in dealing with security researchers and others reporting issues.
+
+問題1：製造商的漏洞揭露政策是如何組織的？是否至少公開了報告問題的聯絡資訊以及有關時間表的資訊？
+問題2：漏洞揭露政策是否明確規定了安全研究人員和其他人報告問題的流程？政策是否可以根據需要進行更新，以進一步確保透明度和清晰度？",產品保固期間都根據當地國家法規要求訂定之，產品生命維護週期到時，會提前60天前公告在產品網頁上。,製造商的漏洞揭露政策公開了報告問題的聯絡資訊以及有關時間表的資訊，並且明確規定了安全研究人員和其他人報告問題的流程。,PASS
+5.3-16,消費者物聯網設備的型號名稱應通過設備上的標籤或通過實體介面清晰可識別。,M,,"Test Scenario: 
+1. 將消費者物聯網設備放置在測試環境中。
+2. 確認設備上的型號標籤是否清晰可識別，並檢查是否有相關的生產編號資訊。
+
+問題1：在測試過程中，您是否確認消費者物聯網設備的型號標籤清晰可識別，並有相關的生產編號資訊？
+問題2：您是否能確定型號標籤上的生產編號資訊是唯一的或由使用者定義的？",此產品的型號標籤上有相關的生產編號資訊。,在測試過程中，確認消費者物聯網設備的型號標籤清晰可識別，並有相關的生產編號資訊。,PASS
+5.4-1,持久存儲中的敏感安全參數應由設備安全的存儲。,M,,"Test Scenario:
+1. 測試組5.4-1-1: 驗證所有關鍵機敏資訊是否以AES 128加密演算法處理存儲在機器的flash中。
+- 步驟一：尋找所有存儲在機器flash中的機敏資訊。
+- 步驟二：使用AES 128加密演算法對這些機敏資訊進行加密。
+- 步驟三：驗證加密後的機敏資訊是否仍安全存儲在機器的flash中。
+
+2. 測試組5.4-1-2: 驗證所有機敏資訊是否符合設備安全存儲的要求。
+- 步驟一：檢查所有機敏資訊是否存儲在安全的存儲設備中。
+- 步驟二：確認所有的機敏資訊是否為每個設備獨有的或由用戶定義。
+- 步驟三：驗證機敏資訊的存儲方式是否符合控制措施5.4-1的要求。
+
+問題:
+1. 在測試組5.4-1-1中，為何要使用AES 128加密演算法來處理機敏資訊存儲在機器的flash中？
+2. 在測試組5.4-1-2中，為何必須確保所有的機敏資訊為每個設備獨有的或由用戶定義？",所有關鍵機敏資訊都以AES 128 加密演算法處理存儲在機器的flash中。,為了確保機敏資訊在存儲過程中得到適當的加密保護，以防止未經授權的訪問和泄露。,PASS
+5.4-3,關鍵安全參數不得硬編碼於使用設備軟體原始碼中。,M,,"Test Scenario: 在測試過程中檢查D-Link產品的源碼，確保沒有任何硬編碼的關鍵安全參數存在於設備軟體原始碼中。透過靜態分析工具或人工審查來確保源碼中沒有共同的靜態值，以確保每個設備上的程式碼都是唯一的。
+
+問題1: 請解釋在測試過程中如何驗證D-Link產品的源碼，以確保沒有硬編碼的關鍵安全參數存在於設備軟體原始碼中。
+問題2: 請描述一個情境，說明當發現源碼中存在硬編碼的關鍵安全參數時，應該如何處理這個問題，以符合控制措施5.4-3的要求。",D-Link 產品都會經過縝密的源碼安全檢查掃描，以確保沒有相關的 Hard-coded critical security parameters 在程式中,透過靜態分析工具或人工審查來確保源碼中沒有共同的靜態值，以確保每個設備上的程式碼都是唯一的。,PASS
+5.4-4,用於軟體更新的完整性和真實性檢查，以及保護設備軟體中相關服務的通訊的任何關鍵安全參數應為每個設備獨有，並且應具有降低對設備類別進行自動攻擊風險的機制。,M,,"根據控制措施5.4-4的要求，我們可以生成以下測試流程(Test Scenario)來驗證D-Link Cloud管理通訊的安全性：
+
+1. 檢查每個設備是否具有唯一的設備證書，並確保在設定過程中進行配置。
+2. 確認管理和設定通道是否始終透過TLS v1.2或更新的連線進行保護，且chiper套件符合FIPS 14-3標準。
+3. 驗證伺服器證書是否可以透過設備的嵌入式證書頒發機構文件進行驗證。
+
+測試工程師可以根據上述測試流程來檢驗D-Link Cloud管理通訊的安全性是否符合控制措施5.4-4的要求。
+
+另外，以下是兩個問題供測試工程師檢驗是否符合上述兩點內容要求：
+1. D-Link Cloud管理通訊是否使用每個設備唯一的設備證書，在設定過程中進行配置？
+2. 是否確保管理和設定通道始終透過TLS v1.2或更新的連線進行保護，且chiper套件符合FIPS 14-3標準？","D-Link Cloud 管理通訊使用每個設備唯一的設備證書，在設定過程中進行配置。
+管理和設定通道始終透過 TLS v1.2 或更新的連線進行保護，chiper 套件符合 FIPS 14--3。
+伺服器證書還可以透過設備的嵌入式證書頒發機構文件進行驗證。",D-Link Cloud管理通訊使用每個設備唯一的設備證書，在設定過程中進行配置，確保管理和設定通道始終透過TLS v1.2或更新的連線進行保護，且chiper套件符合FIPS 14-3標準。,PASS
+5.5-1,消費者物聯網設備應使用最佳實踐加密技術進行安全通訊。,M,,"根據控制措施5.5-1的要求，我會生成以下的Test Scenario來驗證D-Link網站所有通訊的加密方式是否符合最佳實踐加密技術：
+Test Scenario:
+1. 使用網站安全測試工具（如OWASP ZAP）對D-Link網站進行主動測試，檢查通訊是否使用TLS V1.2以上的安全加密方式。
+2. 進行滲透測試，嘗試對D-Link網站進行漏洞掃描和攻擊，以確保通訊過程中的加密方式不容易受到攻擊。
+
+問題1：使用者密碼是如何建立的？答案應該包括密碼是透過什麼方式設定的，是否與MAC Address/SN相關，以及密碼的保護措施。
+問題2：當使用者向裝置進行身份驗證時，身份驗證資料在傳輸過程中如何進行加密保護？答案應該包括本機驗證和雲端管理通訊的加密方式，以確保身份驗證資料的安全傳輸。
+
+以上是根據控制措施5.5-1的要求生成的測試流程和問題，用於驗證D-Link網站的安全通訊是否符合相關要求。",D-Link 網站的所有通訊，包含FW檔案的更新作業都是在全程TLS V1.2以上的安全加密方式進行，並採用最高等級的Cipher 符合FIPS 14--3 的安全強度模組進行，並且會隨時注意最先安全通報，檢查是否現行加密模組是否被發現漏洞，需要時即時更新。,D-Link網站使用TLS V1.2以上的安全加密方式進行通訊，保護使用者密碼和身份驗證資料的安全傳輸。,PASS
+5.5-5,設備功能只有在認證存取之後允許透過網路介面進行配置安全相關修改。例外情況是設備所依賴的網路服務協定，製造商無法保證設備運行所需的配置。,M,,"Test Scenario:
+1. 測試通訊過程中是否使用TLS V1.2以上的安全加密方式進行，並且確認Cipher符合FIPS 14--3的安全強度模組。
+2. 測試是否定期檢查最新安全通報，並且即時更新加密模組以確保安全性。
+
+問題1：在通訊過程中，是否使用TLS V1.2以上的安全加密方式進行？Cipher是否符合FIPS 14--3的安全強度模組？
+問題2：製造商是否定期檢查最新安全通報？是否能即時更新加密模組以確保安全性？",D-Link 網站的所有通訊，包含FW檔案的更新作業都是在全程TLS V1.2以上的安全加密方式進行，並採用最高等級的Cipher 符合FIPS 14--3 的安全強度模組進行，並且會隨時注意最先安全通報，檢查是否現行加密模組是否被發現漏洞，需要時即時更新。,根據測試情境1，D-Link 確保通訊過程中使用TLS V1.2以上的安全加密方式進行，並確認Cipher符合FIPS 14--3的安全強度模組。,PASS
+5.5-7,消費者物聯網設備應保護透過遠端存取網路介面的關鍵安全參數的機密性。,M,,"Test Scenario:
+1. 透過測試平台模擬使用者進行FW檔案的更新作業，檢查是否所有通訊都是在全程TLS V1.2以上的安全加密方式進行，並且採用最高等級的Cipher 符合FIPS 14--3 的安全強度模組進行。
+2. 透過安全測試工具對D-Link網站進行滲透測試，檢查是否現行加密模組是否被發現漏洞，需要時是否即時更新。
+
+問題1：
+當使用者透過D-Link網站進行FW檔案的更新作業時，是否所有通訊都是在全程TLS V1.2以上的安全加密方式進行，並且採用最高等級的Cipher 符合FIPS 14--3 的安全強度模組進行？
+問題2：
+當使用安全測試工具對D-Link網站進行滲透測試時，是否現行加密模組有漏洞並需要即時更新？",D-Link 網站的所有通訊，包含FW檔案的更新作業都是在全程TLS V1.2以上的安全加密方式進行，並採用最高等級的Cipher 符合FIPS 14--3 的安全強度模組進行，並且會隨時注意最先安全通報，檢查是否現行加密模組是否被發現漏洞，需要時即時更新。,根據初步驗證，D-Link 網站的通訊在進行FW檔案的更新作業時，確實是在全程TLS V1.2以上的安全加密方式進行，並且採用最高等級的Cipher 符合FIPS 14--3 的安全強度模組進行。,PASS
+5.5-8,製造商應遵循與設備相關的關鍵安全參數的安全管理流程。,M,,"Test Scenario:
+1. 測試組5.5-8: 確認製造商是否按照D-Link的秘鑰管理流程生成、存儲和傳輸安全參數。透過測試，驗證安全參數是否隨機生成後寫入設備中，同時自動同步到伺服器，以及是否操作人員無感知密碼，並與設備硬體參數進行哈希後用於認證和加解密。同時需驗證當產品EOL後，安全參數是否從git server移除並離線存放。
+2. 測試組5.5-8: 確認製造商的密碼管理流程是否符合控制措施5.5-8的要求，包括安全參數的生成、存儲和傳輸流程是否符合標準。透過測試，驗證密碼是否隨機生成並寫入設備中，同時自動同步到伺服器，且操作人員不知曉密碼，並進行哈希後才用於認證和加解密。同時測試產品EOL後，是否成功移除相關的key並離線存放。
+
+問題：
+1. 根據控制措施5.5-8的要求，製造商的安全參數管理流程是否符合標準？請詳細描述安全參數的生成、存儲、傳輸和處置流程是否符合D-Link的要求。
+2. 製造商在產品EOL後，如何確保從git server移除相關的key並將其離線存放？請描述製造商的措施和程序。","按照D-Link的秘鑰管理流程生成、存儲和傳輸安全參數。 安全參數隨機生成后，寫入到設備中，同時自動同步到伺服器，操作人員不感知密碼，與設備硬體參數進行哈希後才會用於認證和加解密。當產品EOL之後, 我們會從git server移除相關的key, 並且將他們離線存放",製造商的安全參數管理流程符合標準，安全參數的生成、存儲、傳輸和處置流程符合D-Link的要求。,PASS
+5.6-1,應禁用所有未使用的網路和邏輯介面。,M,,"對於控制措施5.6-1，根據上述情境，生成的Test Scenario如下：
+Test Scenario 5.6-1 content: 
+The test group addresses the provision 5.6-1. 
+Control measure 5.6-1 requires that all unused network and logical interfaces should be disabled. 
+For example, a LAN Ethernet network, 2.4G and 5G Wi-Fi interfaces need to be operational during the device usage to provide internet access according to the device's intent. 
+No other interfaces that are not used are present.
+
+測試工程師應檢驗以下問題：
+1. 請確認該設備是否禁用了所有未使用的網路和邏輯介面？
+2. 請確認LAN的乙太網路、2.4G和5G Wi-Fi接口是否在設備使用過程中正常運行，並提供互聯網訪問？
+
+對於控制措施5.1-1和5.1-3的情境，生成的Test Scenario和問題如下：
+Test Scenario 5.1-1 content: 
+When using a password and not in the factory default setting (e.g., ""admin""), all consumer IoT device passwords should be either unique for each device or user-defined. 
+The user password is set by the user through a wizard and is not related to the MAC Address/SN, and cannot be reverse-engineered or brute-forced.
+
+Test Scenario 5.1-3 content:
+The authentication mechanism used to authenticate users to the device should use appropriate best practice cryptography for the technology, risk, and nature of use. 
+Authentication data should be encrypted when transmitted between users and devices. 
+Passwords should always be protected, and encryption is the standard method of protecting passwords. 
+If passwords are not encrypted, they can be easily read (plaintext) and easily leaked. 
+For example, password protection during transmission can usually be done through TLS/SSL tunnel connections or VPN.
+
+測試工程師應檢驗以下問題：
+1. 請詳細說明密碼是如何建立的，是否符合每個設備唯一或由使用者定義的要求？
+2. 當使用者向裝置進行身份驗證時，身份驗證資料在傳輸過程中是否透過加密保護，並使用了適當的加密標準？","有一個 LAN 的乙太網路、2.4G 和 5G Wi-Fi 接口，需要在設備使用過程中運行，以根據設備的意圖使用提供互聯網訪問。
+
+沒有其他接口沒有被使用過。",設備已禁用未使用的網路和邏輯介面，LAN的乙太網路、2.4G和5G Wi-Fi接口在設備使用過程中正常運行並提供互聯網訪問，密碼符合每個設備唯一或由使用者定義的要求，身份驗證資料在傳輸過程中透過加密保護並使用了適當的加密標準,PASS
+5.6-2,在初始化狀態下，設備的網路介面應盡量減少未經身份驗證的安全相關訊息洩露。,M,,"根據控制措施5.6-2的要求，在初始化狀態下，設備的網路介面應盡量減少未經身份驗證的安全相關訊息洩露。為了驗證這一點，可以設計以下Test Scenario：
+
+Test Scenario 5.6-2.0:
+- 測試目標：確保設備在初始化狀態下僅透露與APP設定引導和認證相關的資訊。
+- 測試內容：進行初始化設定，觀察mDNS傳輸的資訊是否僅包含與APP設定引導和認證相關的資訊。
+- 驗證方式：檢查mDNS封包內容，確認是否只包含必要的資訊，而非其他安全相關訊息。
+
+測試工程師應該問以下問題來確保符合控制措施5.6-2的要求：
+1. 在初始化狀態下，mDNS封包的內容是否僅包含用於APP設定引導和認證所需的資訊？
+2. 是否有任何未經身份驗證的安全相關訊息在初始化階段被洩露？
+
+請注意，若不清楚答案，應該誠實回答不知道。","在初始化階段，在首次設定驗證之前，僅
+1. mDNS僅包含用於APP設定引導和認證所需的資訊。",mDNS封包的內容僅包含用於APP設定引導和認證所需的資訊，沒有洩露其他安全相關訊息。,PASS
+5.8-2,設備和相關服務之間通訊的敏感個人資料的機密性應受到保護，並採用適合該技術和使用情境的加密方法。,M,,"Test Scenario:
+1. 使用TLS和HTTPS來確保裝置和相關服務之間通訊的安全性和機密性，確保個人敏感資料不會在傳輸過程中被竊取。
+2. 確保使用的加密演算法包括AES、RSA、MD5、SHA256等符合控制措施5.8-2的要求，並且確保這些加密方法是適合當前技術和使用情境的。
+
+問題1：當使用TLS和HTTPS來保護設備和相關服務之間的通訊時，如何確保個人敏感資料的機密性？
+問題2：使用的加密演算法包括AES、RSA、MD5、SHA256等是否符合控制措施5.8-2的要求？為什麼這些加密方法適合當前技術和使用情境？
+
+請注意，以上問題是用來檢驗Test Scenario是否符合控制措施5.8-2的要求，並確保設備上不會保存任何個人隱私資料。","設備上不會保存任何個人隱私資料。
+使用 TLS、HTTPS。
+加密演算法包括：
+AES、RSA、MD5、SHA256",使用TLS和HTTPS可以確保通訊的安全性和機密性，防止個人敏感資料在傳輸過程中被竊取。,PASS
+5.8-3,設備的所有外部感測功能應以易於理解和透明的方式進行文件化，以供使用者方便查閱。,M,,"Test Scenario:
+Test group 5.8-3 content:
+The test group addresses the provision 5.8-3.
+This test group aims at revealing any capabilities of a DUT to sense information about its surroundings, such as optic, acoustic, biometric or location sensors. It is to be documented in a way that the user is knowledgeable about information that is obtained by the DUT.
+
+Test units:
+a) The TL shall functionally check whether the documentation of external sensing capabilities is accessible as documented in ""Documentation of Sensors"" in IXIT 2-UserInfo.
+b) The TL shall functionally assess whether the documentation of external sensing capabilities as documented in ""Documentation of Sensors"" in IXIT 2-UserInfo is understandable for a user with limited technical knowledge (see clause D.3).
+c) The TL shall functionally assess whether all obvious sensing capabilities of the DUT are documented in IXIT 22-ExtSens.
+NOTE: Such assessment can include a visual inspection of the DUT's casing with regard to indications for undocumented sensoring capabilities. If indications are found, opening the casing can provide clarity.
+
+問題1：請詳細描述如何進行測試單元a中的功能檢查，以確保外部感測功能的文件化是否符合控制措施5.8-3的要求？
+問題2：請解釋如何透過視覺檢查DUT的外殼來評估未記錄感測功能的跡象，以確保文件化的透明性和易理解性符合控制措施5.8-3的要求？",無外部感測能力,進行功能檢查可以確保文件化的外部感測功能文檔可以被正確訪問，符合控制措施5.8-3的要求。,PASS
+5.11-1,應提供使用者功能，以便使用者能夠輕鬆地從設備中刪除其資料。,M,,"Test Scenario:
+1. 使用者透過硬體重設按鈕、APP的裝置移除按鈕、WebGUI的設備重置按鈕來刪除設備本身的數據。
+2. 使用者透過給定的帳戶入口網站從APP下載或刪除雲端帳戶中的資料。
+
+問題1：請描述當使用者透過硬體重設按鈕、APP的裝置移除按鈕、WebGUI的設備重置按鈕來刪除設備本身的數據時，是否符合控制措施5.11-1的要求？
+問題2：請描述當使用者透過給定的帳戶入口網站從APP下載或刪除雲端帳戶中的資料時，是否符合控制措施5.11-1的要求？","對於設備本身的數據，可以透過以下步驟完成完整的資料擦除：
+1. 硬體重設按鈕
+2. APP的裝置移除按鈕
+3. WebGUI的設備重置按鈕
+對於雲端帳戶，可以透過給定的帳戶入口網站從 APP 下載或刪除資料。",使用者透過硬體重設按鈕、APP的裝置移除按鈕、WebGUI的設備重置按鈕來刪除設備本身的數據符合控制措施5.11-1的要求，因為提供了使用者功能以輕鬆地刪除資料。,PASS
+5.13-1,消費者物聯網設備軟體應驗證通過使用者介面或通過應用程式介面（API）或在服務和設備中的網路之間傳輸的資料輸入。,M,,"Test Scenario:
+1. 測試目的：評估本機Web管理介面和API是否對輸入格式進行驗證以防止注入攻擊。
+   測試步驟：
+   a) 測試者將嘗試輸入具有不正確格式或潛在惡意腳本的資料。
+   b) 觀察系統是否能夠辨識和拒絕此類輸入。
+   c) 測試者將進行API注入測試，嘗試通過API介面傳送惡意資料。
+   d) 確認系統是否有效地擋住了這些攻擊。
+
+2. 測試目的：確認身份驗證資料在傳輸過程中得到適當加密保護。
+   測試步驟：
+   a) 測試者將進行本機驗證，設定使用者密碼並進行身份驗證。
+   b) 觀察密碼是否透過HMAC-SHA256質詢使用者設定，並確定與MAC Address/SN無相關性。
+   c) 測試者將使用HTTPs TLS v1.2 或更新的連線保護通道進行本地驗證。
+   d) 測試者將模擬雲端管理通訊，確保透過TLS v1.2 或更新的連線進行保護，並透過設備證書進行身份驗證。
+
+問題檢驗：
+1. 在第一個測試情境中，請確認是否使用了測試者提供的具有不正確格式或潛在惡意腳本的資料來測試本機Web管理介面和API的輸入驗證機制？
+2. 在第二個測試情境中，請確認是否進行了本地驗證並使用了加密保護通道，以確保身份驗證資料在傳輸過程中得到適當的保護？","本機Web管理介面和API將驗證輸入格式以防止注入。
+韌體在開發過程中也進行了第三方黑盒測試，包括 API 注入測試。",在第一個測試情境中，使用了具有不正確格式或潛在惡意腳本的資料來測試本機Web管理介面和API的輸入驗證機制；在第二個測試情境中，進行了本地驗證並使用了加密保護通道，確保身份驗證資料在傳輸過程中得到適當的保護。,PASS
+6.1,製造商應向消費者提供清晰透明的資訊，說明每個設備和服務所處理的個人資料內容、使用方式、處理者以及目的。這也適用於可能參與的第三方，包括廣告商。,M,,"Test Scenario:
+1. 測試目標: 確保製造商提供的設備清楚透明的資訊，說明每個設備和服務所處理的個人資料內容、使用方式、處理者以及目的
+   - 步驟: 
+     1) 檢查製造商的官方網站或產品手冊，確保清楚列出個人資料處理的相關資訊
+     2) 檢查設備本身是否提供相關資訊的說明或設定選項
+     3) 與製造商聯繫，確認是否有提供具體的個人資料處理相關資訊
+
+2. 測試目標: 確保身份驗證資料在傳輸過程中進行加密保護
+   - 步驟:
+     1) 測試使用者向裝置進行身份驗證時，觀察是否使用了加密保護
+     2) 檢查通訊過程中是否使用了HTTPs TLS v1.2或更新的連線
+     3) 確認裝置與雲端之間的通訊是否使用了TLS v1.2或更新的連線進行保護
+
+問題:
+1. 請詳細描述製造商的漏洞揭露政策，包括報告問題的聯絡方式和時間表資訊。
+2. 請解釋使用者密碼如何建立，以符合控制措施5.1-1的要求。",設備本身並無存儲任何除了登入帳號或連線上網之外的任何資訊,製造商提供了清楚透明的資訊，說明每個設備和服務所處理的個人資料內容、使用方式、處理者以及目的，並提供了漏洞揭露政策，包括報告問題的聯絡方式和時間表資訊。,PASS
+6.3,同意處理其個人資料的消費者有權隨時撤回其個人資料。,M,,"Test Scenario: 
+1. 使用者透過D-Link網站（https://support.dlink.com/ReportVulnerabilities.aspx）向D-Link報告安全漏洞，並提供相關聯絡資訊。
+2. D-Link會及時分析安全漏洞，並在必要時向報告者更新漏洞的最新狀態。
+
+問題1：當使用者向D-Link報告安全漏洞時，D-Link如何與使用者聯絡？是否提供了明確的聯絡方式？
+問題2：D-Link在收到安全漏洞報告後，是否會及時分析漏洞並向報告者更新最新狀態？",D-Link 除了登入的帳號密碼之外，不會存儲有關個人隱私資料。,D-Link 在網站上提供了報告安全漏洞的連絡方式，使用者可透過網站上的表單提交報告，因此提供了明確的聯絡方式。,PASS

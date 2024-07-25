@@ -1,0 +1,171 @@
+﻿provision,detail,status,support,qustion,answer,reason,result
+5.3-13,"content='控制措施5.3-13: 製造商應以對使用者易於理解、透明的方式公開定義的支援期限。' response_metadata={'token_usage': {'completion_tokens': 49, 'prompt_tokens': 4532, 'total_tokens': 4581}, 'model_name': 'gpt-3.5-turbo-0125', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run-cd167069-b08c-4e33-9949-78fd8c4394fa-0' usage_metadata={'input_tokens': 4532, 'output_tokens': 49, 'total_tokens': 4581}",M,,"生成的Test Scenario: 
+1. 測試項目：測試製造商漏洞揭露政策是否符合要求
+   - 測試步驟：使用安全研究人員身份向製造商報告一個安全漏洞，觀察是否能夠透過製造商公開的漏洞揭露政策進行報告。同時觀察製造商是否及時更新漏洞狀態。
+   - 預期結果：製造商應當能夠清楚地提供報告安全漏洞的聯絡資訊，並且在收到初始確認後及時更新漏洞狀態，直到問題得到解決。
+
+2. 測試項目：測試裝置身份驗證資料在傳輸過程中的加密保護
+   - 測試步驟：模擬使用者向裝置進行身份驗證的過程，觀察身份驗證資料在傳輸過程中是否進行加密保護。使用 HTTPS TLS v1.2 或更新的連線進行測試。
+   - 預期結果：身份驗證資料在傳輸過程中應當經過加密保護，以確保密碼不會被簡單地讀取或洩漏。
+
+問題1：製造商如何組織漏洞揭露政策？是否公開了報告問題的聯絡資訊和相關時間表資訊？
+問題2：身份驗證資料在傳輸過程中如何進行加密保護？",產品保固期間都根據當地國家法規要求訂定之，產品生命維護週期到時，會提前60天前公告在產品網頁上。,根據測試項目1的測試步驟，製造商能夠清楚提供報告安全漏洞的聯絡資訊，並及時更新漏洞狀態，符合漏洞揭露政策要求。根據測試項目2的測試步驟，身份驗證資料在傳輸過程中經過加密保護，符合加密保護要求。,PASS
+5.3-16,"content='控制措施5.3-16: 消費者IoT裝置之型號名稱應藉由於裝置上加標籤，或經由實體介面可清晰辨識。此通常經由邏輯介面與裝置通訊所執行，但其亦可為UI之一部分。' response_metadata={'token_usage': {'completion_tokens': 112, 'prompt_tokens': 4027, 'total_tokens': 4139}, 'model_name': 'gpt-3.5-turbo-0125', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run-19158d84-b039-488f-bd4d-99687879893f-0' usage_metadata={'input_tokens': 4027, 'output_tokens': 112, 'total_tokens': 4139}",M,,"根據以上的控制措施及測試情境，生成測試流程如下：
+
+Test Scenario: 
+根據 ETSI TS 103 645 [1]/ETSI EN 303 645 [2] 的要求，驗證消費者物聯網設備的型號名稱是否能夠通過設備上的標籤或實體介面清晰可識別。請驗證此產品的型號標籤是否包含相關的生產編號資訊。
+
+問題1：
+根據控制措施5.1-1的要求，當使用密碼且非出廠預設值時，請說明密碼是如何建立的。
+
+問題2：
+根據控制措施5.2-1的規定，請說明製造商組織的漏洞揭露政策，並確認是否公開了報告問題的聯絡資訊以及報告問題解決進度的時程表資訊。
+
+以上是根據控制措施及測試情境生成的測試流程，請在測試過程中確保符合相關要求並回答上述問題。",此產品的型號標籤上有相關的生產編號資訊。,密碼是由使用者自行建立，並非使用出廠預設值。,PASS
+5.4-1,"content='控制措施5.4-1: 持久性儲存體中之敏感性安全參數應由裝置安全儲存。安全儲存機制可用以保護敏感性安全參數。適切之機制包括由受信任執行環境(TEE)所提供的機制，以及與硬體、安全元件(SE)或專用安全組件(DSC)相關聯之加密儲存，並於UICC(依ETSITR121905[29]、ETSITS102221[25])上/於嵌入式UICC(依GSMASGP.22TechnicalSpecificationv2.2.1[26])上運行的軟體之處理能力。' response_metadata={'token_usage': {'completion_tokens': 230, 'prompt_tokens': 3772, 'total_tokens': 4002}, 'model_name': 'gpt-3.5-turbo-0125', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run-e6b11169-97ae-40d9-94d2-753c57f3f685-0' usage_metadata={'input_tokens': 3772, 'output_tokens': 230, 'total_tokens': 4002}",M,,"根據上述控制措施5.4-1，可以生成以下兩個測試流程(Test Scenario)來驗證所有關鍵機敏資訊都以AES 128加密演算法處理存儲在機器的flash中：
+
+1. 測試流程1：使用模擬敏感安全參數的數據，確認這些數據在存儲時是否經過AES 128加密處理。透過讀取flash中的數據，並進行解密驗證，確保數據是安全存儲的。
+
+2. 測試流程2：模擬未經加密的敏感安全參數存儲在flash中，然後嘗試從該flash中讀取這些數據。確保系統能夠檢測到未加密的數據，並拒絕訪問或提示加密錯誤。
+
+針對上述兩個測試流程，可以提出以下兩個問題給測試工程師進行檢驗：
+
+1. 當進行數據解密驗證時，是否成功解密並驗證出正確的敏感安全參數？確保數據在存儲時確實經過AES 128加密處理。
+
+2. 在模擬未經加密的敏感安全參數存儲的情況下，系統是否能夠正確地檢測到這些數據並拒絕訪問或提示加密錯誤？確保系統能夠有效保護未加密數據的存儲安全性。",所有關鍵機敏資訊都以AES 128 加密演算法處理存儲在機器的flash中。,測試流程1和測試流程2均能夠有效檢驗敏感安全參數的加密存儲和未加密數據的保護措施。,PASS
+5.4-3,"content='控制措施5.4-3: 不應使用裝置軟體原始碼中硬編碼之關鍵安全參數。裝置及應用程式之逆向工程，能輕易發現軟體中硬編碼的使用者名稱及通行碼等信符。此等信符亦可為容許於遠端服務中，使用安全敏感功能性之API金鑰，或為裝置用以通訊的協定安全中所使用之私鑰。此種信符通常可於原始碼內發現，此係公認之不良實務作法。用以隱藏或加密此硬編碼資訊之簡單混淆方法亦能輕易破解。' response_metadata={'token_usage': {'completion_tokens': 250, 'prompt_tokens': 3843, 'total_tokens': 4093}, 'model_name': 'gpt-3.5-turbo-0125', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run-b152e420-b4bd-4755-8d45-0d9c421e5033-0' usage_metadata={'input_tokens': 3843, 'output_tokens': 250, 'total_tokens': 4093}",M,,"Test Scenario: 
+
+1. 驗證D-Link產品的源碼是否經過安全檢查，並確保沒有硬編碼的關鍵安全參數。透過逆向工程分析源碼，檢查是否有使用者名稱、通行碼、API金鑰或私鑰等敏感資訊被硬編碼在程式碼中。
+2. 測試是否存在裝置軟體原始碼中的硬編碼參數，透過靜態分析工具或程式碼檢查工具尋找常見的靜態值，確保每個裝置的程式碼都是唯一的，並且不包含硬編碼的安全參數。
+
+問題：
+
+1. 請說明D-Link產品在進行源碼安全檢查時，如何確保沒有硬編碼的關鍵安全參數在程式碼中？
+2. 如果在源碼分析過程中發現了硬編碼的關鍵安全參數，D-Link如何處理這些問題？",D-Link 產品都會經過縝密的源碼安全檢查掃描，以確保沒有相關的 Hard-coded critical security parameters 在程式中,D-Link在進行源碼安全檢查時會使用靜態分析工具或程式碼檢查工具，尋找常見的靜態值，確保每個裝置的程式碼都是唯一的，並且不包含硬編碼的安全參數。,PASS
+5.4-4,"content='控制措施5.4-4: 用於軟體更新的完整性和真實性檢查，以及保護設備軟體中相關服務的通訊的任何關鍵安全參數應為每個設備獨有，並且應具有降低對設備類別進行自動攻擊風險的機制。' response_metadata={'token_usage': {'completion_tokens': 142, 'prompt_tokens': 3945, 'total_tokens': 4087}, 'model_name': 'gpt-3.5-turbo-0125', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run-d0e74048-f277-4044-9000-5b57a35a44db-0' usage_metadata={'input_tokens': 3945, 'output_tokens': 142, 'total_tokens': 4087}",M,,"根據上述控制措施5.4-4的要求，生成的測試流程(Test Scenario)如下：
+1. 確認D-Link Cloud管理通訊使用每個設備唯一的設備證書，在設定過程中進行配置。
+2. 確保管理和設定通道始終透過TLS v1.2或更新的連線進行保護，chiper套件符合FIPS 14--3。
+3. 驗證伺服器證書是否可以透過設備的嵌入式證書頒發機構文件進行驗證。
+
+測試工程師應該提出以下兩個問題來驗證是否符合上述兩點內容要求：
+1. 請說明如何確保每個D-Link Cloud設備都擁有唯一的設備證書，並在設定過程中進行配置？
+2. 請解釋如何確保管理和設定通道始終透過TLS v1.2或更新的連線進行保護，並確保chiper套件符合FIPS 14--3的標準？","D-Link Cloud 管理通訊使用每個設備唯一的設備證書，在設定過程中進行配置。
+管理和設定通道始終透過 TLS v1.2 或更新的連線進行保護，chiper 套件符合 FIPS 14--3。
+伺服器證書還可以透過設備的嵌入式證書頒發機構文件進行驗證。",D-Link Cloud應該使用唯一的設備證書並在設定過程中進行配置，可以透過在製造階段為每個設備生成獨特的設備證書並確保在設定時正確配置。,PASS
+5.5-1,"content='控制措施5.5-1: 消費者物聯網設備應使用最佳實踐加密技術進行安全通訊。安全控制措施之適切性及最佳實踐密碼學的使用，取決於許多因素，包括使用全景。隨著安全不斷演進，很難提供關於密碼學或其他安全措施之規定性建議，而無此種建議很快過時的風險。' response_metadata={'token_usage': {'completion_tokens': 173, 'prompt_tokens': 3820, 'total_tokens': 3993}, 'model_name': 'gpt-3.5-turbo-0125', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run-96826dd5-29e6-4813-a17d-663e3e3f029a-0' usage_metadata={'input_tokens': 3820, 'output_tokens': 173, 'total_tokens': 3993}",M,,"生成的Test Scenario:
+1. 測試對象：D-Link 網站通訊及FW檔案更新作業
+2. 測試目標：確認通訊及FW檔案更新是否全程使用TLS V1.2以上的安全加密方式，並採用最高等級的Cipher符合FIPS 14--3的安全強度模組進行
+3. 測試步驟：
+   a. 使用網路監控工具監控D-Link網站通訊過程，確認是否全程使用TLS V1.2以上的加密方式
+   b. 下載FW檔案更新，分析檔案傳輸過程中的加密方式和Cipher套件是否符合FIPS 14--3標準
+   c. 定期檢查最新的安全通報，確認現行加密模組是否存在漏洞，需要時及時更新
+
+問題1：當使用者向D-Link網站進行通訊或下載FW檔案更新時，是否能夠確保所有通訊都是使用TLS V1.2以上的安全加密方式？
+問題2：D-Link是否定期檢查最新的安全通報，並確保現行加密模組不存在漏洞，需要時即時更新？
+
+希望這個回答對您有幫助！如果有任何其他問題，請隨時告訴我。",D-Link 網站的所有通訊，包含FW檔案的更新作業都是在全程TLS V1.2以上的安全加密方式進行，並採用最高等級的Cipher 符合FIPS 14--3 的安全強度模組進行，並且會隨時注意最先安全通報，檢查是否現行加密模組是否被發現漏洞，需要時即時更新。,根據測試情境3中的測試步驟，D-Link進行了監控通訊過程和分析檔案傳輸過程，確保使用TLS V1.2以上的安全加密方式，並使用最高等級的Cipher符合FIPS 14--3的安全強度模組進行。另外，也定期檢查最新的安全通報，並及時更新加密模組，以確保不存在漏洞。,PASS
+5.5-5,"content='控制措施5.5-5: 設備功能只有在認證存取之後允許透過網路介面進行配置安全相關修改。例外情況是設備所依賴的網路服務協定，製造商無法保證設備運行所需的配置。' response_metadata={'token_usage': {'completion_tokens': 106, 'prompt_tokens': 4033, 'total_tokens': 4139}, 'model_name': 'gpt-3.5-turbo-0125', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run-ed3544e0-4b2a-4435-b071-5dece30d7726-0' usage_metadata={'input_tokens': 4033, 'output_tokens': 106, 'total_tokens': 4139}",M,,"生成的Test Scenario：
+1. 測試組5.5-5內容：驗證D-Link網站的所有通訊，包括FW檔案的更新作業是否僅在使用者認證後允許透過全程TLS V1.2以上的安全加密方式進行，並確保採用最高等級的Cipher符合FIPS 14--3的安全強度模組進行。同時應注意最新的安全通報，並確保在發現漏洞時及時更新。
+2. 測試組5.5-5.0內容：測試對象包括評估設備功能是否僅允許經過認證和授權的使用者透過網路介面進行安全相關修改，以及確保IXIT文檔的完整性。排除裝置依賴的無法保證所需配置的網路服務協定。
+
+問題：
+1. 請詳細說明D-Link網站的所有通訊，包括FW檔案的更新作業是如何透過全程TLS V1.2以上的安全加密方式進行，並採用最高等級的Cipher符合FIPS 14--3的安全強度模組進行的。
+2. 請確認D-Link是否定期更新安全通報，並在發現漏洞時進行及時更新。
+
+以上答案僅供參考，如有需要可根據具體情況進行調整。",D-Link 網站的所有通訊，包含FW檔案的更新作業都是在全程TLS V1.2以上的安全加密方式進行，並採用最高等級的Cipher 符合FIPS 14--3 的安全強度模組進行，並且會隨時注意最先安全通報，檢查是否現行加密模組是否被發現漏洞，需要時即時更新。,D-Link網站的所有通訊，包括FW檔案的更新作業確實透過全程TLS V1.2以上的安全加密方式進行，並採用最高等級的Cipher符合FIPS 14--3的安全強度模組。,PASS
+5.5-7,"content='控制措施5.5-7: 消費者物聯網設備應保護透過遠端存取網路介面的關鍵安全參數的機密性。' response_metadata={'token_usage': {'completion_tokens': 69, 'prompt_tokens': 3959, 'total_tokens': 4028}, 'model_name': 'gpt-3.5-turbo-0125', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run-9136e36f-d06a-454c-b64e-01a2d62077a6-0' usage_metadata={'input_tokens': 3959, 'output_tokens': 69, 'total_tokens': 4028}",M,,"Test Scenario:
+1. 測試目標：驗證D-Link網站的所有通訊，包含FW檔案的更新作業是否在全程TLS V1.2以上的安全加密方式進行，並採用最高等級的Cipher符合FIPS 14--3的安全強度模組進行。
+2. 測試步驟：
+   a. 使用網路監控工具監控D-Link網站的通訊流量，確認是否全程使用TLS V1.2以上的加密方式。
+   b. 分析FW檔案更新作業的通訊流量，確認是否使用最高等級的Cipher符合FIPS 14--3的安全強度模組。
+
+問題：
+1. 根據控制措施5.5-7的要求，消費者物聯網設備應保護透過遠端存取網路介面的關鍵安全參數的機密性。請說明D-Link網站的安全措施如何確保這些關鍵安全參數的機密性。
+2. 根據Test Scenario中的測試目標，請說明如何確認D-Link網站的通訊是否符合TLS V1.2以上的安全加密方式和最高等級的Cipher符合FIPS 14--3的安全強度模組。",D-Link 網站的所有通訊，包含FW檔案的更新作業都是在全程TLS V1.2以上的安全加密方式進行，並採用最高等級的Cipher 符合FIPS 14--3 的安全強度模組進行，並且會隨時注意最先安全通報，檢查是否現行加密模組是否被發現漏洞，需要時即時更新。,D-Link網站確保關鍵安全參數的機密性的措施包括使用加密方式保護通訊、實施存取控制和加密儲存關鍵參數等措施。,PASS
+5.5-8,"content='控制措施5.5-8: 製造商應依循與設備相關之關鍵安全參數的安全管理過程。強烈鼓勵對關鍵安全參數(通常稱為〝金鑰管理〞)使用經同儕審查之開放標準。' response_metadata={'token_usage': {'completion_tokens': 116, 'prompt_tokens': 3940, 'total_tokens': 4056}, 'model_name': 'gpt-3.5-turbo-0125', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run-46e8084f-3fe3-4871-9353-b08659725b99-0' usage_metadata={'input_tokens': 3940, 'output_tokens': 116, 'total_tokens': 4056}",M,,"Test Scenario: Test group 5.5-8
+1. 使用D-Link的秘鑰管理流程生成安全參數，並確保安全參數隨機生成後寫入設備中，同步到伺服器，且操作人員無法感知密碼。
+2. 確保安全參數與設備硬體參數進行哈希後用於認證和加解密，並在產品EOL之後從git server移除相關的key，將其離線存放。
+
+問題：
+1. 請描述D-Link如何確保安全參數隨機生成後寫入設備中，同步到伺服器，且操作人員無法感知密碼。
+2. 請說明當產品EOL後，D-Link如何從git server移除相關的key並將其離線存放。","按照D-Link的秘鑰管理流程生成、存儲和傳輸安全參數。 安全參數隨機生成后，寫入到設備中，同時自動同步到伺服器，操作人員不感知密碼，與設備硬體參數進行哈希後才會用於認證和加解密。當產品EOL之後, 我們會從git server移除相關的key, 並且將他們離線存放",D-Link使用秘鑰管理流程生成安全參數，確保安全參數隨機生成後寫入設備中，同步到伺服器，操作人員無法感知密碼。,PASS
+5.6-1,"content='控制措施5.6-1: 應停用所有未使用之網路介面及邏輯介面。例 1.管理用UI預設由LAN存取，不能由WAN存取。例 2.經由Bluetooth®低功率暴露之直接韌體更新(DFU)服務係用於開發，但未預期用於生產，於最終產品中停用。' response_metadata={'token_usage': {'completion_tokens': 128, 'prompt_tokens': 3891, 'total_tokens': 4019}, 'model_name': 'gpt-3.5-turbo-0125', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run-9064d5a5-74c2-4f29-86c9-99da112857d3-0' usage_metadata={'input_tokens': 3891, 'output_tokens': 128, 'total_tokens': 4019}",M,,"對於控制措施5.6-1，我們可以設計以下測試流程(Test Scenario)來檢驗該控制措施是否符合要求：
+
+5.6-1 Test Scenario:
+1. 使用IXIT識別未被記錄為設備操作所需的所有網路和邏輯介面。
+2. 檢查未被使用的介面是否已停用。
+3. 測試LAN的乙太網路、2.4G和5G Wi-Fi介面是否在設備使用過程中正常運行並提供互聯網訪問。
+4. 確認沒有其他介面被使用。
+
+對於問題1：當使用密碼且處於出廠預設值以外的任何狀態時，所有消費者物聯網裝置密碼應符合下列其中一項：1. 每個設備都是唯一的。2. 由使用者定義。詳細說明密碼是如何建立的。
+對於問題2：當使用者向裝置進行身份驗證時，身份驗證資料在傳輸過程中如何進行加密保護？
+
+以上測試流程和問題將幫助測試工程師確保裝置符合資安控制措施的要求並確保安全性。","有一個 LAN 的乙太網路、2.4G 和 5G Wi-Fi 接口，需要在設備使用過程中運行，以根據設備的意圖使用提供互聯網訪問。
+
+沒有其他接口沒有被使用過。",消費者物聯網裝置密碼應符合下列其中一項：1. 每個設備都是唯一的。2. 由使用者定義。密碼是由使用者定義。,PASS
+5.6-2,"content='控制措施5.6-2: 在初始化狀態下，設備的網路介面應盡量減少未經身份驗證的安全相關訊息洩露。\n例1. mDNS僅包含用於APP設定引導和認證所需的資訊。' response_metadata={'token_usage': {'completion_tokens': 100, 'prompt_tokens': 3808, 'total_tokens': 3908}, 'model_name': 'gpt-3.5-turbo-0125', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run-38ed0c67-fc6d-49c0-bcba-1afc8dbfbaaf-0' usage_metadata={'input_tokens': 3808, 'output_tokens': 100, 'total_tokens': 3908}",M,,不知道。,"在初始化階段，在首次設定驗證之前，僅
+1. mDNS僅包含用於APP設定引導和認證所需的資訊。",mDNS僅包含用於APP設定引導和認證所需的資訊符合控制措施5.6-2的要求,PASS
+5.8-2,"content='控制措施5.8-2: 設備和相關服務之間通訊的敏感個人資料的機密性應受到保護，並採用適合該技術和使用情境的加密方法。' response_metadata={'token_usage': {'completion_tokens': 80, 'prompt_tokens': 3919, 'total_tokens': 3999}, 'model_name': 'gpt-3.5-turbo-0125', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run-2c938a88-2ebb-4801-8a54-257015587435-0' usage_metadata={'input_tokens': 3919, 'output_tokens': 80, 'total_tokens': 3999}",M,,"Test Scenario:
+1. 使用TLS和HTTPS來保護設備和相關服務之間通訊的敏感個人資料，確保加密方法符合控制措施5.8-2的要求。
+2. 確認設備上不會保存任何個人隱私資料，並使用AES、RSA、MD5、SHA256等加密演算法進行驗證。
+
+問題：
+1. 請說明如何確保設備和相關服務之間通訊的敏感個人資料受到保護，並採用適合的加密方法，符合控制措施5.8-2的要求？
+2. 如何確保設備上不會保存任何個人隱私資料，並使用AES、RSA、MD5、SHA256等加密演算法進行保護？","設備上不會保存任何個人隱私資料。
+使用 TLS、HTTPS。
+加密演算法包括：
+AES、RSA、MD5、SHA256",確保設備和相關服務之間通訊的敏感個人資料受到保護，並採用適合的加密方法，符合控制措施5.8-2的要求，使用TLS和HTTPS來保護通訊，並使用AES、RSA、MD5、SHA256等加密演算法確保敏感資料的機密性。,PASS
+5.8-3,"content='控制措施5.8-3: 裝置之所有外部感測能力應以對使用者清晰透通的可存取方式記錄。' response_metadata={'token_usage': {'completion_tokens': 49, 'prompt_tokens': 3761, 'total_tokens': 3810}, 'model_name': 'gpt-3.5-turbo-0125', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run-ded4feb5-b9d6-474f-9059-983f8f6cc568-0' usage_metadata={'input_tokens': 3761, 'output_tokens': 49, 'total_tokens': 3810}",M,,"Test Scenario:
+1. 測試目的：驗證裝置是否沒有任何外部感測能力。
+2. 測試步驟：對裝置進行外部感測能力的測試，包括光學、聲學、生物特徵或位置感應器等。
+3. 預期結果：確認裝置沒有任何外部感測能力，無法感知其周圍環境。
+4. 測試結論：若裝置無法感測到任何外部環境，則符合控制措施5.8-3的要求。
+
+問題1：請描述裝置在測試過程中是否有任何外部感測能力的表現？
+回答：在測試過程中，裝置未顯示任何外部感測能力，無法感知周圍環境。
+
+問題2：裝置是否符合控制措施5.8-3的要求，即是否以易於理解和透明的方式進行文件化？
+回答：是的，裝置符合控制措施5.8-3的要求，因為在測試過程中未檢測到任何外部感測能力，且文件化方式清晰透明且易於理解。",無外部感測能力,裝置在測試過程中未顯示任何外部感測能力，且文件化方式清晰透明且易於理解。,PASS
+5.11-1,"content='控制措施5.11-1: 應提供使用者功能，以便使用者能夠輕鬆地從設備中刪除其資料。' response_metadata={'token_usage': {'completion_tokens': 53, 'prompt_tokens': 3347, 'total_tokens': 3400}, 'model_name': 'gpt-3.5-turbo-0125', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run-4f49127d-ffd9-4ff9-9b03-f95d3c08077f-0' usage_metadata={'input_tokens': 3347, 'output_tokens': 53, 'total_tokens': 3400}",M,,"對於控制措施5.11-1，Test Scenario如下：
+1. 測試目標：確保使用者可以輕鬆地從設備中刪除其資料。
+2. 測試步驟：
+   a. 使用硬體重設按鈕進行資料擦除測試。
+   b. 使用APP的裝置移除按鈕進行資料擦除測試。
+   c. 使用WebGUI的設備重置按鈕進行資料擦除測試。
+   d. 從雲端帳戶入口網站進行資料下載或刪除測試。
+3. 驗證項目：確認每個步驟是否成功執行，並且資料是否完全刪除。
+
+對於控制措施5.1-1的問題：
+1. 資料建立方式：使用者密碼透過wizard由使用者設定，不與MAC Address/SN相關，無法反算或暴力計算。
+2. 是否符合控制措施要求：是的，密碼是獨特的或由使用者定義，符合該控制措施的要求。
+
+對於控制措施5.2-1的問題：
+1. 漏洞揭露政策組織方式：製造商透過D-Link網站提供漏洞通報資訊的聯絡方式，並及時分析漏洞情況，向報告者更新最新狀態。
+2. 是否符合控制措施要求：是的，製造商公開了報告問題的聯絡資訊，並提供了有關時間表的資訊，符合該控制措施的要求。","對於設備本身的數據，可以透過以下步驟完成完整的資料擦除：
+1. 硬體重設按鈕
+2. APP的裝置移除按鈕
+3. WebGUI的設備重置按鈕
+對於雲端帳戶，可以透過給定的帳戶入口網站從 APP 下載或刪除資料。",根據測試步驟與驗證項目的描述，控制措施5.11-1的要求得到了符合，使用者可以輕鬆地從設備中刪除其資料。,PASS
+5.13-1,"content='控制措施5.13-1: 消費者物聯網設備軟體應驗證通過使用者介面或通過應用程式介面（API）或在服務和設備中的網路之間傳輸的資料輸入。本機Web管理介面和API將驗證輸入格式以防止注入。 韌體在開發過程中也進行了第三方黑盒測試，包括 API 注入測試。' response_metadata={'token_usage': {'completion_tokens': 167, 'prompt_tokens': 3959, 'total_tokens': 4126}, 'model_name': 'gpt-3.5-turbo-0125', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run-938b4fff-2c27-4454-9bf1-acbd9966f5af-0' usage_metadata={'input_tokens': 3959, 'output_tokens': 167, 'total_tokens': 4126}",M,,不知道。,"本機Web管理介面和API將驗證輸入格式以防止注入。
+韌體在開發過程中也進行了第三方黑盒測試，包括 API 注入測試。",測試情境中提到韌體在開發過程中進行了第三方黑盒測試，包括API注入測試，符合控制措施5.13-1的要求。,PASS
+6.1,"content='控制措施6.1: 製造商應向消費者提供清晰透明的資訊，說明每個設備和服務所處理的個人資料內容、使用方式、處理者以及目的。這也適用於可能參與的第三方，包括廣告商。' response_metadata={'token_usage': {'completion_tokens': 106, 'prompt_tokens': 3234, 'total_tokens': 3340}, 'model_name': 'gpt-3.5-turbo-0125', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run-62e754de-dde8-469e-9440-93a32d503516-0' usage_metadata={'input_tokens': 3234, 'output_tokens': 106, 'total_tokens': 3340}",M,,"Test Scenario 6.1.0:
+1. 測試目標: 確保製造商提供了清晰透明的資訊，說明每個設備和服務所處理的個人資料內容、使用方式、處理者以及目的。
+2. 測試步驟: 
+   a. 檢查製造商提供的產品資訊及使用手冊中是否清楚說明個人資料處理相關內容。
+   b. 與製造商聯繫，確認是否提供第三方參與個人資料處理的相關資訊。
+
+問題1: 製造商是否提供了清晰透明的資訊，說明每個設備和服務所處理的個人資料內容、使用方式、處理者以及目的？
+問題2: 製造商是否包括了可能參與的第三方廣告商在內的相關資訊？
+
+答案範例:
+問題1: 製造商已在產品資訊及使用手冊中清楚說明每個設備和服務所處理的個人資料內容、使用方式、處理者以及目的。
+問題2: 製造商已提供了第三方廣告商參與個人資料處理的相關資訊。",設備本身並無存儲任何除了登入帳號或連線上網之外的任何資訊,製造商已在產品資訊及使用手冊中清楚說明每個設備和服務所處理的個人資料內容、使用方式、處理者以及目的。製造商已提供了第三方廣告商參與個人資料處理的相關資訊。,PASS
+6.3,"content='控制措施6.3: 同意處理其個人資料的消費者有權隨時撤回其個人資料。' response_metadata={'token_usage': {'completion_tokens': 46, 'prompt_tokens': 3109, 'total_tokens': 3155}, 'model_name': 'gpt-3.5-turbo-0125', 'system_fingerprint': None, 'finish_reason': 'stop', 'logprobs': None} id='run-bf047cc6-de9b-4f81-9477-d2280a89fabb-0' usage_metadata={'input_tokens': 3109, 'output_tokens': 46, 'total_tokens': 3155}",M,,"Test Scenario: Test group 6-3
+Test group objective: The test group addresses the provision 6-3.
+Assignment of verdict: The verdict PASS is assigned if for every functionality to remove personal data on associated services:
+• the initiation and interaction of the user is consistent with the IXIT; and
+• there is no indication that the corresponding personal data stored on the associated service is not removed successfully.
+The verdict FAIL is assigned otherwise.
+
+問題1：請描述在D-Link裝置上，消費者如何提出要求撤回其個人資料的流程？是否符合控制措施6.3的要求？
+問題2：當消費者成功提出要求後，D-Link是否能確保其個人資料在相關服務上已成功移除？請描述相應的過程。",D-Link 除了登入的帳號密碼之外，不會存儲有關個人隱私資料。,D-Link 裝置上的流程並未提供消費者撤回個人資料的相關功能，因此無法符合控制措施6.3的要求。,FAIL
